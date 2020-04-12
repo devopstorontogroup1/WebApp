@@ -7,7 +7,7 @@ pipeline{
     stages{
         stage("Source Control -Git Checkout"){
             steps{
-                git url: 'https://github.com/amaitisears/WebApp.git'
+                git url: 'https://github.com/devopstorontogroup1/WebApp.git'
             }
         }
         
@@ -23,9 +23,8 @@ pipeline{
          stage("Compile - Maven") {
             agent any
             steps {
-                slackSend channel: 'devopsbootcamp', color: 'good', message: 'Build Started: ${currentBuild.projectName} ${currentBuild.number}', teamDomain: 'devopsbootcampworld', tokenCredentialId: 'slack'                
-                sh 'mvn clean install'
-               
+                slackSend channel: 'toronto-group1', color: 'good', message: 'Build Started: on https://github.com/devopstorontogroup1/WebApp.git', teamDomain: 'torontogroup1', tokenCredentialId: 'slackSecretText'                
+                sh 'mvn clean install'               
             }
         }   
         
@@ -72,8 +71,7 @@ pipeline{
         
         stage("Performance Test - Quality - Blazemeter"){
             steps{
-                blazeMeterTest credentialsId: 'Blazemeter', testId: '7892218.taurus', workspaceId: '475066'      
-                // blazeMeterTest credentialsId: 'Blazemeter', testId: '7913784.taurus', workspaceId: '480055'     
+   		blazeMeterTest credentialsId: 'Blazemeter', testId: '7913784.taurus', workspaceId: '480055'     
             }
         }
         
